@@ -9,7 +9,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (_req, res) => {
   try {
     const users = await userService.getAllUsers();
     return res.status(200).json(users);
@@ -18,7 +18,18 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await userService.getUser(id);
+    return res.status(200).json(user.dataValues);
+  } catch (error) {
+    return res.status(404).json({ message: 'User does not exist' });
+  }
+};
+
 module.exports = {
   createUser,
   getAllUsers,
+  getUser,
 };
