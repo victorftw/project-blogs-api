@@ -20,6 +20,10 @@ const createUser = async ({ displayName, email, password, image }) => {
   return { token };
 };
 
+const getAllUsers = async () =>
+  User.findAll({ attributes: ['id', 'displayName', 'email', 'image'] });
+
 module.exports = {
   createUser,
+  getAllUsers,
 };

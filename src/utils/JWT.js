@@ -8,6 +8,9 @@ const generateToken = (login) =>
     algorithm: 'HS256',
   });
 
+const authenticate = async (token) => jwt.verify(token, JWT_SECRET);
+
 module.exports = {
   generateToken,
+  authenticate,
 };
