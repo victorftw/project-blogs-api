@@ -9,12 +9,6 @@ const createUser = async ({ displayName, email, password, image }) => {
     where: { email, password },
   });
 
-  if (!user) {
-    const error = new Error('User already registered');
-    error.status = 409;
-    throw error;
-  }
-
   const token = generateToken(user.dataValues);
 
   return { token };
