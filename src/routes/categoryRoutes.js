@@ -5,6 +5,8 @@ const categoryController = require('../controllers/categoryController');
 
 const categoryRouter = Router();
 
+categoryRouter.get('/categories', validateToken, categoryController.getAllCategories);
+
 categoryRouter.post(
   '/categories',
   validateToken,
