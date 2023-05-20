@@ -8,7 +8,8 @@ const validateToken = async (req, res, next) => {
   }
 
   try {
-    await authenticate(authorization);
+    const { id } = await authenticate(authorization);
+    res.locals.user = id;
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Expired or invalid token' });

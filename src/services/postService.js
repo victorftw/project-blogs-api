@@ -1,4 +1,4 @@
-const { BlogPost, User, Category } = require('../models');
+const { BlogPost, User, Category, PostCategory } = require('../models');
 
 const getAllPosts = async () =>
   BlogPost.findAll({
@@ -8,6 +8,33 @@ const getAllPosts = async () =>
     ],
   });
 
+const createPost = async ({ userId, title, content, categoryIds }) => {
+  if (!title || !content || !categoryIds) {
+    throw new Error('Some required fields are missing');
+  }
+  
+  const newPost = await BlogPost.create({ title, content, userId });
+
+  const categories = await Category.findAll({ where: { id: categoryIds } });
+
+  if (categories.length !== categoryIds.length) {
+    throw new Error('one or more "categoryIds" not found');
+  }
+
+  await PostCategory.bulkCreate(categoryIds.map((category) => ({
+      postId: newPost.id,
+      categoryId: category,
+    })));
+
+  return { id: newPost.id,
+    title, 
+    content, 
+    userId, 
+    updated: newPost.updated, 
+    published: newPost.published };
+};
+
 module.exports = {
   getAllPosts,
+  createPost,
 };
