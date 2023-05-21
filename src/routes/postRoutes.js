@@ -8,6 +8,8 @@ const postRouter = Router();
 
 postRouter.get('/post', validateToken, postController.getAllPosts);
 
+postRouter.get('/post/search', validateToken, postController.searchPost);
+
 postRouter.get('/post/:id', validateToken, postController.getPostById);
 
 postRouter.post('/post', validateToken, postController.createPost);
