@@ -48,8 +48,31 @@ const getPostById = async (id) => {
   return response;
 };
 
+const updatePost = async ({ userId, postId, title, content }) => {
+  const post = await getPostById(postId);
+
+  if (userId !== post.userId) {
+    throw new Error('Unauthorized user');
+  }
+
+  await BlogPost.update({ title, content }, {
+    where: { id: postId },
+  });
+
+  const updatedPost = await BlogPost.findOne({
+    where: { id: postId },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', attributes: ['id', 'name'] },
+    ],
+  });
+
+  return updatedPost;
+};
+
 module.exports = {
   getAllPosts,
   createPost,
   getPostById,
+  updatePost,
 };
