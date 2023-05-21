@@ -42,19 +42,15 @@ const getPostById = async (id) => {
       { model: Category, as: 'categories', attributes: ['id', 'name'] },
     ],
   });
+
   if (!response) {
     throw new Error('Post does not exist');
   }
+  
   return response;
 };
 
-const updatePost = async ({ userId, postId, title, content }) => {
-  const post = await getPostById(postId);
-
-  if (userId !== post.userId) {
-    throw new Error('Unauthorized user');
-  }
-
+const updatePost = async ({ postId, title, content }) => {
   await BlogPost.update({ title, content }, {
     where: { id: postId },
   });
@@ -70,9 +66,15 @@ const updatePost = async ({ userId, postId, title, content }) => {
   return updatedPost;
 };
 
+const deletePost = async (id) => {
+  await PostCategory.destroy({ where: { postId: id } });
+  await BlogPost.destroy({ where: { id } });
+};
+
 module.exports = {
   getAllPosts,
   createPost,
   getPostById,
   updatePost,
+  deletePost,
 };

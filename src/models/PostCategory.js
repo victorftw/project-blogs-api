@@ -24,6 +24,7 @@ const PostCategorySchema = (sequelize, DataTypes) => {
       through: PostCategoryTable,
       foreignKey: 'post_id',
       otherKey: 'category_id',
+      onDelete: 'CASCADE',
     });
 
     Category.belongsToMany(BlogPost, {
@@ -31,6 +32,7 @@ const PostCategorySchema = (sequelize, DataTypes) => {
       through: PostCategoryTable,
       foreignKey: 'category_id',
       otherKey: 'post_id',
+      onDelete: 'CASCADE',
     });
   };
 

@@ -29,12 +29,17 @@ const getPostById = async (req, res) => {
 const updatePost = async (req, res) => {
   const { id } = req.params;
   const { title, content } = req.body;
-  const userId = res.locals.user;
+  const response = await postService.updatePost({ postId: id, title, content });
+  return res.status(200).json(response);
+};
+
+const deletePost = async (req, res) => {
+  const { id } = req.params;
   try {
-    const response = await postService.updatePost({ userId, postId: id, title, content });
-    return res.status(200).json(response);
+    await postService.deletePost(id);
+    return res.status(204).end();
   } catch ({ message }) {
-    return res.status(401).json({ message });
+    return res.status(404).json({ message });
   }
 };
 
@@ -43,4 +48,5 @@ module.exports = {
   createPost,
   getPostById,
   updatePost,
+  deletePost,
 };
