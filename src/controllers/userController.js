@@ -28,8 +28,15 @@ const getUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  const userId = res.locals.user;
+  await userService.deleteUser(userId);
+  return res.status(204).end();
+};
+
 module.exports = {
   createUser,
   getAllUsers,
   getUser,
+  deleteUser,
 };

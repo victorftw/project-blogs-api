@@ -23,8 +23,13 @@ const getUser = async (id) =>
     where: { id },
   });
 
+const deleteUser = async (id) => {
+  await User.destroy({ where: { id } });
+};
+
 module.exports = {
   createUser,
   getAllUsers,
   getUser,
+  deleteUser,
 };

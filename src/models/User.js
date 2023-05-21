@@ -21,7 +21,9 @@ const UserSchema = (sequelize, DataTypes) => {
   UserTable.associate = ({ BlogPost }) => {
     UserTable.hasMany(BlogPost, {
       as: 'blog_posts',
-      foreigKey: 'user_id'
+      foreigKey: 'user_id',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
   };
 

@@ -24,6 +24,7 @@ const PostCategorySchema = (sequelize, DataTypes) => {
       through: PostCategoryTable,
       foreignKey: 'post_id',
       otherKey: 'category_id',
+      onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     });
 
@@ -32,6 +33,7 @@ const PostCategorySchema = (sequelize, DataTypes) => {
       through: PostCategoryTable,
       foreignKey: 'category_id',
       otherKey: 'post_id',
+      onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     });
   };

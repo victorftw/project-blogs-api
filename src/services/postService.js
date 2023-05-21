@@ -67,7 +67,6 @@ const updatePost = async ({ postId, title, content }) => {
 };
 
 const deletePost = async (id) => {
-  await PostCategory.destroy({ where: { postId: id } });
   await BlogPost.destroy({ where: { id } });
 };
 
